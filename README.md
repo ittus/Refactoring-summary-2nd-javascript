@@ -29,3 +29,45 @@ When a function in one module spends more time communicating with functions or d
 
 ### 10. Data clumps
 Same three or four data items together in lots of places
+
+### 11. Primittive Obsession
+Use primitive types instead of custom fundamental types
+
+### 12. Repeated switches
+Same conditional switching logic pops up in different places
+
+### 13. Loops
+Using loops instead of first-class functions such as filter or map
+
+### 14. Lazy element
+A class, struct or function that isn't doing enough to pay for itself should be eliminated.
+
+### 15. Speculative generality
+All sorts of hooks and special cases to handle things that aren’t required
+
+### 16. Temporary field
+An instance variable that is set only in certain circumstances.
+
+### 17. Message chains
+Ưhen a client asks one object for another object, which the client then asks for yet another object...
+
+### 18. Middle man
+When an object delegates much of its functionality.
+
+### 19. Insider trading
+Modules that whisper to each other by the coffee machine need to be separated by using Move Function and Move Field to reduce the need to chat.
+
+### 20. Large class
+A class is trying to do too much, it often shows up as too many fields
+
+### 21. Alternative Classes with Different Interfaces
+Classes with methods that look to similar.
+
+### 22. Data class
+Classes that have fields, getting and setting methods for the fields, and nothing else
+
+### 23. Refused Bequest
+Subclasses doesn't make uses of parents method
+
+### 24. Comment
+The comments are there because the code is bad
