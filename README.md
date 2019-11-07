@@ -71,3 +71,64 @@ Subclasses doesn't make uses of parents method
 
 ### 24. Comment
 The comments are there because the code is bad
+
+## 4. MOST COMMON SET OF REFACTORING
+
+### 1. Extract Function
+Extract fragment of code into its own function named after its purpose.
+
+```javascript
+function printOwing(invoice) {
+  printBanner()
+  let outstannding = calculateOutstanding()
+
+  // print details
+  console.log(`name: ${invoice.customer}`)
+  console.log(`amount: ${outstanding}`)
+}
+```
+
+to
+
+```javascript
+function printOwing(invoice) {
+  printBanner()
+  let outstannding = calculateOutstanding()
+  printDetails(outstanding)
+
+  function printDetails(outstanding) {
+    console.log(`name: ${invoice.customer}`)
+    console.log(`amount: ${outstanding}`)
+  }
+}
+```
+
+**Motivation**:
+- You know what's the code doing without reading the details
+- Short function is easier to read
+- Reduce comment
+
+### 2. Inline Function
+Get rid of the function when the body of the code is just as clear as the name
+
+```javascript
+function rating(aDriver) {
+  return moreThanFiveLateDeliveries(aDriver) ? 2 : 1
+}
+function moreThanFiveLateDeliveries(aDriver) {
+  return aDriver.numberOfLateDeliveries > 5
+}
+```
+
+to
+
+```javascript
+function rating(aDriver) {
+  return aDriver.numberOfLateDeliveries > 5 ? 2 : 1
+}
+```
+
+**Motivation**
+- When Indirection is needless (simple delegation) becomes irritating.
+- If group of methods are badly factored and grouping them makes it clearer
+
