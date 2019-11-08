@@ -132,3 +132,56 @@ function rating(aDriver) {
 - When Indirection is needless (simple delegation) becomes irritating.
 - If group of methods are badly factored and grouping them makes it clearer
 
+### 3. Extract Variable
+Add a name to an expression
+
+```javascript
+//price is base price ­ quantity discount + shipping
+return order.quantity * order.itemPrice -
+  Math.max(0, order.quantity - 500) * order.itemPrice * 0.05 +
+  Math.min(order.quantity * order.itemPrice * 0.1, 100)
+```
+
+to
+
+```javascript
+const basePrice = order.quantity * order.itemPrice
+const quantityDiscount = Math.max(0, order.quantity ­ 500) * order.itemP
+const shipping = Math.min(basePrice * 0.1, 100)
+return basePrice ­- quantityDiscount + shipping;
+```
+
+** Motivation **
+- Break down and name a part of a more complex piece of logic
+- Easier for debugging
+
+### 4. Inline Variable
+Remove variable which doesn't really communicate more than the expression itself.
+
+```javascript
+let basePrice = anOrder.basePrice
+return (basePrice > 1000)
+```
+
+to
+
+```javascript
+return anOrder.basePrice > 1000
+```
+
+### 5. Change Function Declaration
+Rename a function, change list of parameters
+
+```javascript
+function circum(radius) {...}
+```
+
+to
+
+```javascript
+function circumference(radius) {...}
+```
+
+** Motivation **
+- Easier to understand
+- Easier to reuse, sometime better encapsulation
