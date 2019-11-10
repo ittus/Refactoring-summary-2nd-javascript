@@ -151,7 +151,7 @@ const shipping = Math.min(basePrice * 0.1, 100)
 return basePrice ­- quantityDiscount + shipping;
 ```
 
-** Motivation **
+**Motivation**
 - Break down and name a part of a more complex piece of logic
 - Easier for debugging
 
@@ -182,6 +182,61 @@ to
 function circumference(radius) {...}
 ```
 
-** Motivation **
+**Motivation**
 - Easier to understand
 - Easier to reuse, sometime better encapsulation
+
+### 6. Encapsulate Variable
+Encapsulat a reference to some data structure
+
+```javascript
+let defaultOwner = {firstName: "Martin", lastName: "Fowler"}
+```
+
+to
+
+```javascript
+// defaultOwner.js
+let defaultOwnerData = {firstName: "Martin", lastName: "Fowler"}
+export function defaultOwner() { return defaultOwnerData }
+export function setDefaultOwner(arg) { defaultOwnerData = arg }
+```
+
+**Motivation**
+- Provide a clear point to monitor changes and use of the data, like validation.
+
+### 7. Rename Variable
+Make shared variable's name can self-explain
+
+```javascript
+let a = height * width
+```
+
+to
+
+```javascript
+let area = height * width
+```
+
+### 8. Introduce Parameter Object
+Replace groups of data items that regularly travel together with a single data structure
+
+```javascript
+function amountInvoiced(startDate, endDate) {}
+function amountReceived(startDate, endDate) {}
+function amountOverdue(startDate, endDate) {}
+```
+
+to
+
+```javascript
+function amountInvoiced(aDateRange) {}
+function amountReceived(aDateRange) {}
+function amountOverdue(aDateRange) {}
+```
+
+**Motivation**
+- Make explicit the relationship between the data items
+- Reduce the size of parameter list
+- Make code more consistent
+- Enable deeper changes to the code
