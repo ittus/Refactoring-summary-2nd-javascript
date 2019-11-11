@@ -72,7 +72,7 @@ Subclasses doesn't make uses of parents method
 ### 24. Comment
 The comments are there because the code is bad
 
-## 4. MOST COMMON SET OF REFACTORING
+## 6. MOST COMMON SET OF REFACTORING
 
 ### 1. Extract Function
 Extract fragment of code into its own function named after its purpose.
@@ -240,3 +240,80 @@ function amountOverdue(aDateRange) {}
 - Reduce the size of parameter list
 - Make code more consistent
 - Enable deeper changes to the code
+
+### 9. Combine Functions Into Class
+Form a class base on group of functions that operate closely on a common data
+
+```javascript
+function base(aReading) {}
+function taxableCharge(aReading) {}
+function calculateBaseCharge(aReading) {}
+```
+
+to
+
+```javascript
+class Reading() {
+  base() {}
+  taxableCharge() {}
+  calculateBaseCharge() {}
+}
+```
+
+**Motivation**
+- Simplify function call by removing many arguments
+- Easier to pass object to other parts of the system
+
+### 10. Combine Functions Into Transform
+Takes the source data as input and calculates all the derivations, putting each derived value as a field in the output data
+
+```javascript
+function base(aReading) {}
+function taxableCharge(aReading) {}
+```
+
+to
+
+```javascript
+function enrichReading(argReading) {
+  const aReading = _.cloneDeep(argReading)
+  aReading.baseCharge = base(aReading)
+  aReading.taxableCharge = taxableCharge(aReading)
+  return aReading
+}
+```
+
+**Motivation**
+- Avoid duplication of logic
+
+### 11. Split Phase
+Split code which do different things into separate modules
+
+```javascript
+const orderData = orderString.split(/\s+/)
+const productPrice = priceList[orderData[0].split("-")[1]]
+const orderPrice = parseInt(orderData[1]) * productPrice
+```
+
+to
+
+```javascript
+const orderRecord = parseOrder(orderString)
+const orderPrice = price(orderRecord, priceList)
+
+function parseOrder(aString) {
+  const values = aString.split(/\s+/)
+  return {
+    productID: values[0].split("-")[1],
+    quantity: parseInt(values[1])
+  }
+}
+function price(order, priceList) {
+  return order.quantity * priceList[order.productID]
+}
+```
+
+**Motivation**
+- Make the different explicit, revealing the different in the code
+- Be able to deal with each module separately
+## 7. ENCAPSULATION
