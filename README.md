@@ -187,7 +187,7 @@ function circumference(radius) {...}
 - Easier to reuse, sometime better encapsulation
 
 ### 6. Encapsulate Variable
-Encapsulat a reference to some data structure
+Encapsulate a reference to some data structure
 
 ```javascript
 let defaultOwner = {firstName: "Martin", lastName: "Fowler"}
@@ -316,4 +316,70 @@ function price(order, priceList) {
 **Motivation**
 - Make the different explicit, revealing the different in the code
 - Be able to deal with each module separately
+
 ## 7. ENCAPSULATION
+
+### 1. Encapsulate Record
+Create record (class) from object
+
+```javascript
+organization = {name: "Acme gooseberries", country: "GB"}
+```
+
+to
+
+```javascript
+class Organization {
+  constructor(data) {
+    this._name = data.name
+    this._country = data.country
+  }
+
+  get name() { return this._name }
+  set name(arg) { this._name = arg }
+  get country() { retrun this._country }
+  set country(arg) { this._country = arg }
+}
+```
+
+**Motivation**
+- Hide what's stored and provide methods to get value
+- Easier to refactoring, for example: rename
+
+### 2. Encapsulate Collection
+A method returns a collection. Make it return a read-only view and provide add/remove methods
+
+```javascript
+class Person {
+  get courses() { return this._courses }
+  set courses(aList) { this._courses = aList }
+}
+```
+
+to
+
+```javascript
+class Person {
+  get courses() { return this._courses.slice() }
+  addCourse(aCourse) {}
+  removeCourse(aCourse)
+}
+```
+
+**Motivation**
+- Change to the collection should go through the owning class to prevent unexpected changes.
+- Prevent modification of the underlying collection for example: return a copy or read-only proxy instead of collection value
+
+### 3. Replace Primitive with Object
+
+### 4. Replace Temp with Query
+
+### 5. Extract Class
+
+### 6. Inline Class
+
+### 7. Hide Delegate
+
+### 8. Remove Middle Man
+
+### 9. Substitute Algorithm
