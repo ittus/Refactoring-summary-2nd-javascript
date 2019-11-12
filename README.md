@@ -468,7 +468,81 @@ class Person {
 - When want to refactor pair of classes. First Inline Class -> Extract Class to make new separation
 
 ### 7. Hide Delegate
+A client is calling a delegate class of an object, create methods on the server to hide the delegate.
+
+```javascript
+manager = aPerson.department.manager
+```
+
+to
+
+```javascript
+manager = aPerson.manager
+
+class Person {
+  get manager() {
+    return this.department.manager
+  }
+}
+```
+
+**Motivation**
+- Client doesn't need to know and response to delegation's change
+- Better encapsulation
 
 ### 8. Remove Middle Man
+Client call the delegate directly
+
+```javacript
+manager = aPerson.manager
+
+class Person {
+  get manager() {
+    return this.department.manager
+  }
+}
+```
+
+to
+
+```javascript
+manager = aPerson.department.manager
+```
+
+**Motivation**
+- When there are too many delegating methods
 
 ### 9. Substitute Algorithm
+Replace complicated algorithm with simpler algorithm
+
+```javascript
+function foundPerson(people) {
+  for (let i = 0; i < people.lenth; i++) {
+    if (people[i] === "Don") {
+      return "Don"
+    }
+    if (people[i] === "John") {
+      return "John"
+    }
+    if (people[i] === "Kent") {
+      return "Kent"
+    }
+  }
+  return ""
+}
+```
+
+to
+
+```javascript
+function foundPerson(people) {
+  const candidates = ["Don", "John", "Kent"]
+  return people.find(p => candidates.includes(p)) || ""
+}
+```
+
+**Motivation**
+- Change to algorithm which make changes easier
+- The clearer algorithm is, the better.
+
+## 8. MOVING FEATURES
