@@ -371,12 +371,101 @@ class Person {
 - Prevent modification of the underlying collection for example: return a copy or read-only proxy instead of collection value
 
 ### 3. Replace Primitive with Object
+Create class for data
+
+```javascript
+orders.filter(o => "high" === o.priority || "rush" === o.priority)
+```
+
+to
+
+```javascript
+orders.filter(o => o.priority.higherThan(new Priority("normal")))
+```
+
+**Motivation**
+- Encapsulate behaviour with data
 
 ### 4. Replace Temp with Query
+Extract the assignment of the variable into a function
+
+```javascript
+const basePrice = this._quantity * this._itemPrice
+if (basePrice > 1000) {
+  return basePrice * 0.95
+} else {
+  return basePrice * 0.98
+}
+```
+
+to
+
+```javascript
+get basePrice() { return this._quantity * this._itemPrice }
+//...
+if (this.basePrice > 1000) {
+  return this.basePrice * 0.95
+} else {
+  return this.basePrice * 0.98
+}
+```
+
+**Motivation**
+- Avoid duplicating the calculation logic in similar functions
 
 ### 5. Extract Class
+Extract class base on a subset of data and a subset of methods
+
+```javascript
+class Person {
+  get officeAreaCode() { return this._officeAreaCode }
+  get officeNumber() { return this._officeNumber }
+}
+```
+
+to
+
+```javascript
+class Person {
+  get officeAreaCode() { return this._telephoneNumber.areaCode }
+  get officeNumber() { return this._telephoneNumber.number }
+}
+class TelephoneNumber {
+  get areaCode() { return this._areaCode }
+  get number() { return this._number }
+}
+```
+
+**Motivation**
+- Smaller class is easier to understand
+- Separate class's responsibility
 
 ### 6. Inline Class
+Merge class if class isn't doing very much. Move its feature to another class then delete it.
+
+```javascript
+class Person {
+  get officeAreaCode() { return this._telephoneNumber.areaCode }
+  get officeNumber() { return this._telephoneNumber.number }
+}
+class TelephoneNumber {
+  get areaCode() { return this._areaCode }
+  get number() { return this._number }
+}
+```
+
+to
+
+```javascript
+class Person {
+  get officeAreaCode() { return this._officeAreaCode }
+  get officeNumber() { return this._officeNumber }
+}
+```
+
+**Motivation**
+- Class is no longer pulling its weight and shouldn’t be around any more
+- When want to refactor pair of classes. First Inline Class -> Extract Class to make new separation
 
 ### 7. Hide Delegate
 
