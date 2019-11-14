@@ -546,3 +546,90 @@ function foundPerson(people) {
 - The clearer algorithm is, the better.
 
 ## 8. MOVING FEATURES
+
+### 1. Move Function
+Move a function when it references elements in other contexts more than the one it currently resides in
+
+```javascript
+class Account {
+  get overdraftCharge() {}
+}
+class AccountType {}
+```
+
+to
+
+```javascript
+class Account {}
+class AccountType {
+  get overdraftCharge() {}
+}
+```
+
+**Motivation**
+- Improve encapsulation, loose coupling
+
+### 2. Move Field
+Move field from once class to another
+
+```javascript
+class Customer {
+  get plan() { return this._plan }
+  get discountRate() { return this._discountRate }
+}
+```
+
+to
+
+```javascript
+class Customer {
+  get plan() { return this._plan }
+  get discountRate() { return this.plan.discountRate }
+}
+```
+
+**Motivation**
+- Pieces of data that are always passed to functions together are usually best put in a single record
+- If a change in one record causes a field in another record to change too, that’s a sign of a field in the wrong place
+
+### 3. Move Statements into Function
+When statement is a part of called functions (always go togeter), move it inside the function
+
+```javascript
+result.push(`<p>title: ${person.photo.title}</p>`)
+result.concat(photoData(person.photo))
+
+function photoData(aPhoto) {
+  return [
+    `<p>location: ${aPhoto.location}</p>`,
+    `<p>date: ${aPhoto.data.toDateString()}</p>`
+  ]
+}
+```
+
+to
+
+```javascript
+result.concat(photoData(person.photo))
+
+function photoData(aPhoto) {
+  return [
+    `<p>title: ${aPhoto.title}</p>`,
+    `<p>location: ${aPhoto.location}</p>`,
+    `<p>date: ${aPhoto.data.toDateString()}</p>`
+  ]
+}
+```
+
+**Motivation**
+- Remove duplicated code
+
+### 4. Replace Inline Code with Function Call
+
+### 5. Slide Statements
+
+### 6. Split Loop
+
+### 7. Replace Loop with Pipeline
+
+### 8. Remove Dead Code
