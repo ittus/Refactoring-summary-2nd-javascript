@@ -690,7 +690,72 @@ let charge
 - It makes code easier to understand and easier to extract function
 
 ### 7. Split Loop
+Split the loop which does two different things
+
+```javascript
+let averageAge = 0
+let totalSalary = 0
+for (const p of people) {
+  averageAge += p.age
+  totalSalary += p.salary
+}
+averageAage = averageAge / people.length
+```
+
+to
+
+```javascript
+let totalSalary = 0
+for (const p of people) {
+  totalSalary += p.salary
+}
+
+let averageAge = 0
+for (const p of people) {
+  averageAge += p.age
+}
+averageAge = averageAge / people.length
+```
+
+**Motivation**
+- Easier to use
+- Easier to understand because each loop will do only 1 thing
 
 ### 8. Replace Loop with Pipeline
+Replace loop with collection pipeline, like `map` or `filter`
+
+```javascript
+const names = []
+for (const i of input) {
+  if (i.job === "programmer") {
+    names.push(i.name)
+  }
+}
+```
+
+to
+
+```javascript
+const names = input.filter(i => i.job === "programmer").
+                    map(i => i.name)
+```
+
+**Motivation**
+- Easier to understand the flow of data
 
 ### 9. Remove Dead Code
+
+```javascript
+if (false) {
+  doSomethingThatUsedToMatter()
+}
+```
+
+to
+
+```javascript
+
+```
+
+**Motivation**
+- Easier and quicker for developer to understand the codebase
