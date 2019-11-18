@@ -624,12 +624,73 @@ function photoData(aPhoto) {
 **Motivation**
 - Remove duplicated code
 
-### 4. Replace Inline Code with Function Call
+### 4. Move Statements To Callers
 
-### 5. Slide Statements
+```javascript
+emitPhotoData(outStream, person.photo)
 
-### 6. Split Loop
+function emitPhotoData(outStream, photo) {
+  outStream.write(`<p>title: ${photo.title}</p>\n`)
+  outStream.write(`<p>location: ${photo.location}</p>\n`)
+}
+```
 
-### 7. Replace Loop with Pipeline
+to
 
-### 8. Remove Dead Code
+```javascript
+emitPhotoData(outStream, person.photo)
+outStream.write(`<p>location: ${photo.location}</p>\n`)
+
+function emitPhotoData(outStream, photo) {
+  outStream.write(`<p>title: ${photo.title}</p>\n`)
+}
+```
+
+**Motivation**
+- When common behavior used in several places needs to vary in some of its call
+
+### 5. Replace Inline Code with Function Call
+Replace the inline code with a call to the existing function
+
+```javascript
+let appliesToMass = false
+for (const s of states) {
+  if (s === "MA") appliesToMass = true
+}
+```
+
+```javascript
+appliesToMass = states.includes("MA")
+```
+
+**Motivation**
+- Remove duplication
+- Meaningful function name is easier to understand
+
+### 6. Slide Statements
+Move related code to near each other
+
+```javascript
+const pricingPlan = retrievePricingPlan()
+const order = retreiveOrder()
+let charge
+const chargePerUnit = pricingPlan.unit
+```
+
+to
+
+```javascript
+const pricingPlan = retrievePricingPlan()
+const chargePerUnit = pricingPlan.unit
+const order = retreiveOrder()
+let charge
+```
+
+**Motivation**
+- It makes code easier to understand and easier to extract function
+
+### 7. Split Loop
+
+### 8. Replace Loop with Pipeline
+
+### 9. Remove Dead Code
