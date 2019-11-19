@@ -759,3 +759,113 @@ to
 
 **Motivation**
 - Easier and quicker for developer to understand the codebase
+
+
+## 9. ORGANIZING DATA
+
+### 1. Split Variable
+Any variable with more than one responsibility should be replaced with multiple variables, one for each responsibility
+
+```javascript
+let temp = 2 * (height + width)
+console.log(temp)
+temp = height * width
+console.log(temp)
+```
+
+to
+
+```javascript
+const perimeter = 2 * (height + width)
+console.log(perimeter)
+const area = height * width
+console.log(area)
+```
+
+**Motivation**
+- Easier to understand
+
+### 2. Rename Field
+
+```javascript
+class Organization {
+  get name() {}
+}
+```
+
+to
+
+```javascript
+class Organization {
+  get title() {}
+}
+```
+
+### 3. Replace Derived Variable With Query
+Remove anny variables which cloud be easily calculate
+
+```javascript
+get discountedTotal() { return this._discountedTotal }
+set discount(aNumber) {
+  const old = this._discount
+  this._discount = aNumber
+  this._discountedTotal += old - aNumber
+}
+```
+
+to
+
+```javascript
+get discountedTotal() { return this._baseTotal - this._discount }
+set discount() { this._discount = aNumber }
+```
+
+**Motivation**
+- Minimize scope of mutable data
+- A calculate makes it clearer what the meaning of data is
+
+### 4. Change Reference To Value
+Treat data as value. When update, replace entire inner object with a new one
+
+```javascript
+class Product {
+  applyDiscount(arg) {
+    this._price.amount -= arg
+  }
+}
+```
+
+to
+
+```javascript
+class Product {
+  applyDiscount(arg) {
+    this._price = new Money(this._price.amount - arg, this._price.currency)
+  }
+}
+```
+
+**Motivation**
+- Immutable data is easier to deal with
+
+### 5. Change Value To Reference
+When need to share an object in different place, or have duplicated objects
+
+```javascript
+let customer = new Customer(customerData)
+```
+
+to
+
+```javascript
+let customer = customerRepository.get(customerData.id)
+```
+
+**Motivation**
+- Update one reference is easier and more consistent than update multiple copies
+
+## 10. SIMPLIFYING CONDITIONAL LOGIC
+
+## 11. REFACTORING APIS
+
+## 12. DEALING WITH INHERITANCE
