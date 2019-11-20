@@ -866,6 +866,97 @@ let customer = customerRepository.get(customerData.id)
 
 ## 10. SIMPLIFYING CONDITIONAL LOGIC
 
+### 1. Decompose Conditional
+Decomposing condition and replacing each chunk of code with a function call
+```javascript
+if (!aDate.isBefore(plan.summerStart) && !aData.isAfter(plan.summerEnd)) {
+  charge = quantity * plan.summerRate
+} else {
+  charge = quantity * plan.regularRate + plan.regularServiceCharge
+}
+```
+
+to
+
+```javascript
+if (summer()) {
+  charge = summerCharge()
+} else {
+  charge = regularCharge()
+}
+```
+
+**Motivation**
+- Clearer intention of what we're branching on
+
+### 2. Consolidate Conditional Expression
+Consolidate different condition check which the result action is same to a single condition check with single result
+
+```javascript
+if (anEmployee.seniority < 2) return 0
+if (anEmployee.monthsDisabled > 12) return 0;
+if (anEmployee.isPartTime) return 0
+```
+
+to
+
+```javascript
+if (isNotEligableForDisability()) return 0
+
+function isNotEligableForDisability() {
+   return ((anEmployee.seniority < 2)
+    || (anEmployee.monthsDisabled > 12)
+    || (anEmployee.isPartTime))
+}
+```
+
+**Motivation**
+- Often lead to Extract Function, which reveal intead of the code by function name
+- If conditions are not related, don't consolidate them
+
+### 3. Replace Nested Conditional with Guard Clauses
+If condition is unusual condition, early return (Guard Clauses) and exist the function
+
+```javascript
+function getPayAmount() {
+  let result
+  if (isDead) {
+    result = deadAmount()
+  } else {
+    if (isSeparated) {
+      result = separatedAmount()
+    } else {
+      if (isRetired) {
+        result = retiredAmount()
+      } else {
+        result = normalPayAmount()
+      }
+    }
+  }
+  return result
+}
+```
+
+to
+
+```javascript
+function getPayAmount() {
+  if (isDead) return deadAmount()
+  if (isSeparated) return separatedAmount()
+  if (isRetired) return retiredAmount()
+  return normalPayAmount()
+}
+```
+
+**Motivation**
+- It shows conditional branch are normal or unusual
+
+### 4. Replace Conditional with Polymorphism 272
+
+### 5. Introduce Special Case
+
+### 6. Introduce Assertion
+
 ## 11. REFACTORING APIS
 
 ## 12. DEALING WITH INHERITANCE
