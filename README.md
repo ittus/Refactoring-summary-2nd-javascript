@@ -951,11 +951,89 @@ function getPayAmount() {
 **Motivation**
 - It shows conditional branch are normal or unusual
 
-### 4. Replace Conditional with Polymorphism 272
+### 4. Replace Conditional with Polymorphism
+Using object oriented class instead of complex condition
+
+```javascript
+switch (bird.type) {
+  case 'EuropeanSwallow':
+    return 'average'
+  case 'AfricanSwallow':
+    return bird.numberOfCoconuts > 2 ? 'tired' : 'average'
+  case 'NorwegianBlueParrot':
+    return bird.voltage > 100 ? 'scorched' : 'beautiful'
+  default:
+    return 'unknow'
+}
+```
+
+to
+
+```javascript
+class EuropeanSwallow {
+  get plumage() {
+    return 'average'
+  }
+}
+class AfricanSwallow {
+  get plumage() {
+    return this.numberOfCoconuts > 2 ? 'tired' : 'average'
+  }
+}
+class NorwegianBlueParrot {
+  get plumage() {
+    return this.voltage > 100 ? 'scorched' : 'beautiful'
+  }
+}
+```
+
+**Motivation**
+- Make the separation more explicit
 
 ### 5. Introduce Special Case
+Bring special check case to a single place
+
+```javascript
+if (aCustomer === "unknown") {
+  customerName = "occupant"
+}
+```
+
+to
+
+```javascript
+class UnknownCustomer {
+  get name() {
+    return "occupant"
+  }
+}
+```
+
+**Motivation**
+- Remove duplicate code
+- Easy to add additional behavior to special object
 
 ### 6. Introduce Assertion
+Make the assumption explicit by writing an assertion
+
+```javascript
+if (this.discountRate) {
+  base = base - (this.discountRate * base)
+}
+```
+
+to
+
+```javascript
+assert(this.discountRate >= 0)
+if (this.discountRate) {
+  base = base - (this.discountRate * base)
+}
+```
+
+**Motivation**
+- Reader can understand the assumption easily
+- Help in debugging
 
 ## 11. REFACTORING APIS
 
