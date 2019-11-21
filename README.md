@@ -1037,4 +1037,149 @@ if (this.discountRate) {
 
 ## 11. REFACTORING APIS
 
+### 1. Separate Query from Modifier
+Separate function that returns a value (query only) and function with side effects (example: modify data)
+
+```javascript
+function alertForMiscreant (people) {
+  for (const p of people) {
+    if (p === "Don") {
+      setOffAlarms()
+      return "Don"
+    }
+    if (p === "John") {
+      setOffAlarms()
+      return "John"
+    }
+  }
+  return ""
+}
+```
+
+to
+
+```javascript
+function findMiscreant (people) {
+  for (const p of people) {
+    if (p === "Don") {
+      return "Don"
+    }
+    if (p === "John") {
+      return "John"
+    }
+  }
+  return ""
+}
+function alertForMiscreant (people) {
+  if (findMiscreant(people) !== "") setOffAlarms();
+}
+```
+
+**Motivation**
+- Immutable function (query only) is easy to test and reuse
+
+### 2. Parameterize Function
+Combine function with similar logic and different literal value
+
+```javascript
+function tenPercentRaise(aPerson) {
+  aPerson.salary = aPerson.salary.multiply(1.1)
+}
+function fivePercentRaise(aPerson) {
+  aPerson.salary = aPerson.salary.multiply(1.05)
+}
+```
+
+to
+
+```javascript
+function raise(aPerson, factor) {
+  aPerson.salary = aPerson.salary.multiply(1 + factor)
+}
+```
+
+**Motivation**
+- Increase usefulness of the function
+
+### 3. Remove Flag Argument
+Remove _literal_ flag argument by clear name functions
+
+```javascript
+function setDimension(name, value) {
+  if (name === 'height') {
+    this._height = value
+    return
+  }
+  if (name === 'width') {
+    this._width = value
+    return
+  }
+}
+```
+
+to
+
+```javascript
+function setHeight(value) { this._height = value }
+function setWidth(value) { this._width = value }
+```
+
+**Motivation**
+- Easy to read and understand code
+- Be careful if flag argument appears more than 1 time in the function, or is passed to further function
+
+### 4. Preserve Whole Object
+Passing whole object instead of multiple parameters
+
+```javascript
+const low = aRoom.daysTempRange.low
+const high = aRoom.daysTempRange.high
+if (aPlan.withinRange(low, high)) {}
+```
+
+to
+
+```javascript
+if (aPlan.withInRange(aRoom.daysTempRange)) {}
+```
+
+**Motivation**
+- Shorter parameter list
+- Don't need to add additional parameter if function needs more data in the future
+- Be careful if function and object are in different modules, which make tight coupling if we apply this refactor
+
+### 5. Replace Parameter with Query
+
+### 6. Replace Query with Parameter
+
+### 7. Remove Setting Method
+
+### 8. Replace Constructor with Factory Function
+
+### 9. Replace Function with Command
+
+### 10. Replace Command with Function
+
 ## 12. DEALING WITH INHERITANCE
+
+### 1. Pull Up Method
+
+### 2. Pull Up Field
+
+### 3. Pull Up Constructor Body
+
+### 4. Push Down Method
+
+### 5. Push Down Field
+
+### 6. Replace Type Code with Subclasses
+
+### 7. Remove Subclass
+
+### 8. Extract Superclass
+
+### 9. Collapse Hierarchy
+
+### 10. Replace Subclass with Delegate
+
+### 11. Replace Superclass with Delegate
