@@ -1480,9 +1480,116 @@ class Person {
 ```
 
 ### 8. Extract Superclass
+If 2 classes have similar behaviors, create superclass and move these behaviors to superclass
+
+```javascript
+class Department {
+  get totalAnnualCost() {...}
+  get name() {...}
+  get headCount() {...}
+}
+
+class Employee {
+  get annualCost() {...}
+  get name() {...}
+  get id() {...}
+}
+```
+
+to
+
+```javascript
+class Party {
+  get name() {...}
+  get annualCost() {...}
+}
+
+class Department extends Party {
+  get annualCost() {...}
+  get headCount() {...}
+}
+
+class Employee extends Party {
+  get annualCost() {...}
+  get id() {...}
+}
+```
+
+**Motivation**
+- Remove duplication
+- Prepare for Replace Superclass with Delegate refactor
 
 ### 9. Collapse Hierarchy
+Merge superclass and subclass when there are no longer different enough to keep them separate
+
+```javascript
+class Employee {...}
+class Salesman extends Employee {...}
+```
+
+to
+
+```javascript
+class Employee {...}
+```
 
 ### 10. Replace Subclass with Delegate
+"Favor object composition over class inheritance" (where composition is effectively the same as delegation
+
+```javascript
+class Order {
+  get daysToShip() {
+    return this._warehouse.daysToShip
+  }
+}
+
+class PriorityOrder extends Order {
+  get daysToShip() {
+    return this._priorityPlan.daysToShip
+  }
+}
+```
+
+to
+
+```javascript
+class Order {
+  get daysToShip() {
+    return (this._priorityDelegate)
+      ? this._priorityDelegate.daysToShip
+      : this._warehouse.daysToShip
+  }
+}
+
+class PriorityOrderDelegate {
+  get daysToShip() {
+    return this._priorityPlan.daysToShip
+  }
+}
+```
+
+**Motivation**
+- If there are more than 1 reason to vary something, inheritance is not enough
+- Inheritance introduce very close relationship
 
 ### 11. Replace Superclass with Delegate
+If functions of the superclass don’t make sense on the subclass, replace with with delegate
+
+```javascript
+class List {...}
+class Stack extends List {...}
+```
+
+to
+
+```javascript
+class Stack {
+  constructor() {
+    this._storage = new List();
+  }
+}
+class List {...}
+```
+
+**Motivation**
+- Easier to maintain code
