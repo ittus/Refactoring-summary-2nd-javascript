@@ -1220,9 +1220,79 @@ class Person {
 
 ### 8. Replace Constructor with Factory Function
 
+```javascript
+leadEngineer = new Employee(document.leadEngineer, 'E')
+```
+
+to
+
+```javascript
+leadEngineer = createEngineer(document.leadEngineer)
+```
+
+**Motivation**
+- You want to do more than simple construction when you create an object.
+
+
 ### 9. Replace Function with Command
+Encapsulate function into its own object
+
+```javascript
+function score(candidate, medicalExam, scoringGuide) {
+  let result = 0
+  let healthLevel = 0
+  // long body code
+}
+```
+
+to
+
+```javascript
+class Scorer {
+  constructor(candidate, medicalExam, scoringGuide) {
+    this._candidate = candidate
+    this._medicalExam = medicalExam
+    this._scoringGuide = scoringGuide
+  }
+
+  execute() {
+    this._result = 0
+    this._healthLevel = 0
+    // long body code
+  }
+}
+```
+
+**Motivation**
+- You want to add complimentary operation, such as undo
+- Can have richer lifecycle
+- Can build customization such as inheritance and hooks
+- Easily break down a complex function to simpler steps
 
 ### 10. Replace Command with Function
+
+```javascript
+class ChargeCalculator {
+  constructor (customer, usage){
+    this._customer = customer
+    this._usage = usage
+  }
+  execute() {
+    return this._customer.rate * this._usage
+  }
+}
+```
+
+to
+
+```javascript
+function charge(customer, usage) {
+  return customer.rate * usage
+}
+```
+
+**Motivation**
+- Function call is simpler than command object
 
 ## 12. DEALING WITH INHERITANCE
 
