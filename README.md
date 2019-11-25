@@ -1150,9 +1150,73 @@ if (aPlan.withInRange(aRoom.daysTempRange)) {}
 
 ### 5. Replace Parameter with Query
 
+```javascript
+availableVacation(anEmployee, anEmployee.grade)
+
+function availableVacation(anEmployee, grade) {
+  // calculate vacation...
+}
+```
+
+to
+
+```javascript
+availableVacation(anEmployee)
+
+function availableVacation(anEmployee) {
+  const grade = anEmployee.grade
+  // calculate vacation...
+}
+```
+
+**Motivation**
+- Shorter list of parameters
+- Simpler work for the caller (because fewer parameters)
+- Be careful because it can increase function's dependency
+
 ### 6. Replace Query with Parameter
+Replace internal reference with a parameter
+
+```javascript
+targetTemperature(aPlan)
+
+function targetTemperature(aPlan) {
+  currentTemperature = thermostat.currentTemperature
+  // rest of function...
+}
+```
+
+to
+
+```javascript
+targetTemperature(aPlan, thermostat.currentTemperature)
+
+function targetTemperature(aPlan, currentTemperature) {
+  // rest of function...
+}
+```
+
+**Motivation**
+- Reduce function's dependency
+- Create more pure functions
 
 ### 7. Remove Setting Method
+Make a field immutable by removing setting method
+
+```javascript
+class Person {
+  get name() {...}
+  set name(aString) {...}
+}
+```
+
+to
+
+```javascript
+class Person {
+  get name() {...}
+}
+```
 
 ### 8. Replace Constructor with Factory Function
 
