@@ -1297,10 +1297,95 @@ function charge(customer, usage) {
 ## 12. DEALING WITH INHERITANCE
 
 ### 1. Pull Up Method
+Move similar methods in subclass to superclass
+
+```java
+class Employee {...}
+
+class Salesman extends Employee {
+  get name() {...}
+}
+
+class Engineer extends Employee {
+  get name() {...}
+}
+```
+
+to
+
+```java
+class Employee {
+  get name() {...}
+}
+
+class Salesman extends Employee {...}
+class Engineer extends Employee {...}
+```
+
+**Motivation**
+- Eliminate duplicate code in subclass
+- If two methods has similar workflow, consider using Template Method Pattern
 
 ### 2. Pull Up Field
+Pull up similar field to superclass to remove duplication
+
+```java
+class Employee {...}
+
+class Salesman extends Employee {
+  private String name;
+}
+
+class Engineer extends Employee {
+  private String name;
+}
+```
+
+to
+
+```java
+class Employee {
+  protected String name;
+}
+
+class Salesman extends Employee {...}
+class Engineer extends Employee {...}
+```
 
 ### 3. Pull Up Constructor Body
+You have constructors on subclasses with mostly identical bodies.
+Create a superclass constructor; call this from the subclass methods
+
+```javascript
+class Party {...}
+
+class Employee extends Party {
+  constructor(name, id, monthlyCost) {
+    super()
+    this._id = id
+    this._name = name
+    this._monthlyCost = monthlyCost
+  }
+}
+```
+
+to
+
+```javascript
+class Party {
+  constructor(name){
+    this._name = name
+  }
+}
+
+class Employee extends Party {
+  constructor(name, id, monthlyCost) {
+    super(name)
+    this._id = id
+    this._monthlyCost = monthlyCost
+  }
+}
+```
 
 ### 4. Push Down Method
 
