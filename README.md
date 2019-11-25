@@ -1388,12 +1388,96 @@ class Employee extends Party {
 ```
 
 ### 4. Push Down Method
+If method is only relevant to one subclass, moving it from superclass to subclass
+
+```javascript
+class Employee {
+  get quota {...}
+}
+
+class Engineer extends Employee {...}
+class Salesman extends Employee {...}
+```
+
+to
+
+```javascript
+class Employee {...}
+class Engineer extends Employee {...}
+class Salesman extends Employee {
+  get quota {...}
+}
+```
 
 ### 5. Push Down Field
+If field is only used in one subclass, move it to those subclasses
+
+```java
+class Employee {
+  private String quota;
+}
+
+class Engineer extends Employee {...}
+class Salesman extends Employee {...}
+```
+
+to
+
+```java
+class Employee {...}
+class Engineer extends Employee {...}
+
+class Salesman extends Employee {
+  protected String quota;
+}
+```
 
 ### 6. Replace Type Code with Subclasses
 
+```javascript
+function createEmployee(name, type) {
+  return new Employee(name, type)
+}
+```
+
+to
+
+```javascript
+function createEmployee(name, type) {
+  switch (type) {
+    case "engineer": return new Engineer(name)
+    case "salesman": return new Salesman(name)
+    case "manager":  return new Manager (name)
+  }
+}
+```
+
+**Motivation**
+- Easily to apply Replace Conditional with Polymorphism later
+- Execute different code depending on the value of a type
+
 ### 7. Remove Subclass
+You have subclasses do to little. Replace the subclass with a field in superclass.
+
+```javascript
+class Person {
+  get genderCode() {return "X"}
+}
+class Male extends Person {
+  get genderCode() {return "M"}
+}
+class Female extends Person {
+  get genderCode() {return "F"}
+}
+```
+
+to
+
+```javascript
+class Person {
+  get genderCode() {return this._genderCode}
+}
+```
 
 ### 8. Extract Superclass
 
