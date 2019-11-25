@@ -1,4 +1,8 @@
+My personal notes while reading "Refactoring: Improving the Design of Existing Code (2nd Edition)" by Martin Fowler. It only contains some basic concept as my understanding. If you want to learn more, I highly recommend you should buy the book.
 
+If you are the publisher and think this repository should not be public, please write me an email to vuminhthang [at] gmail [dot] com and I will make it private.
+
+Happy reading!
 
 ## 1. TABLE OF CONTENT
 - [1. TABLE OF CONTENT](#1-table-of-content)
