@@ -1,8 +1,10 @@
 My personal notes while reading "Refactoring: Improving the Design of Existing Code (2nd Edition)" by Martin Fowler. It only contains some basic concept as my understanding. If you want to learn more, I highly recommend you should buy the book.
 
-If you are the publisher and think this repository should not be public, please write me an email to vuminhthang [at] gmail [dot] com and I will make it private.
+If you are the publisher and think this repository should not be public, please write me an email to vuminhthang [dot] cm [at] gmail [dot] com and I will make it private.
 
 Happy reading!
+
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Refactoring%20Book%20Summary&url=https://github.com/ittus/Refactoring-summary-2nd-javascript&hashtags=refactoring,javascript,software,developers)
 
 ## 1. TABLE OF CONTENT
 - [1. TABLE OF CONTENT](#1-table-of-content)
