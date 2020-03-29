@@ -597,7 +597,7 @@ class Person {
 ### 8. Remove Middle Man
 Client call the delegate directly
 
-```javacript
+```javascript
 manager = aPerson.manager
 
 class Person {
