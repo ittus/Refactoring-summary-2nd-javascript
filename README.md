@@ -153,7 +153,7 @@ All sorts of hooks and special cases to handle things that aren’t required
 An instance variable that is set only in certain circumstances.
 
 ### 17. Message chains
-Ưhen a client asks one object for another object, which the client then asks for yet another object...
+When a client asks one object for another object, which the client then asks for yet another object...
 
 ### 18. Middle man
 When an object delegates much of its functionality.
