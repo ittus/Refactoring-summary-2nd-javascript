@@ -250,9 +250,9 @@ to
 
 ```javascript
 const basePrice = order.quantity * order.itemPrice
-const quantityDiscount = Math.max(0, order.quantity ­ 500) * order.itemP
+const quantityDiscount = Math.max(0, order.quantity - 500) * order.itemP
 const shipping = Math.min(basePrice * 0.1, 100)
-return basePrice ­- quantityDiscount + shipping;
+return basePrice - quantityDiscount + shipping;
 ```
 
 **Motivation**
