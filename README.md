@@ -184,7 +184,7 @@ Extract fragment of code into its own function named after its purpose.
 ```javascript
 function printOwing(invoice) {
   printBanner()
-  let outstannding = calculateOutstanding()
+  let outstanding = calculateOutstanding()
 
   // print details
   console.log(`name: ${invoice.customer}`)
@@ -197,7 +197,7 @@ to
 ```javascript
 function printOwing(invoice) {
   printBanner()
-  let outstannding = calculateOutstanding()
+  let outstanding = calculateOutstanding()
   printDetails(outstanding)
 
   function printDetails(outstanding) {
